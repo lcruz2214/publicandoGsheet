@@ -2,20 +2,28 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-// teste de envio de dados
+// Declarando Variaveis
+
+String GOOGLE_SCRIPT_ID = "AKfycbxr2z__0kjNbziMTFsTEeX_qn1OHuzZcnriaXQu1RGMl7uHndTc";
+
+long timeInterval = 5000;
+long timeIntervalAnterior = 0;
+
+#define led 2
+bool estadoLed = LOW;
+
+
 
 //******************
 // *** Senha da rede 
-const char* ssid = ""; // Login
-const char* password = ""; //Senha
+const char* ssid = "Vedderdog_2.4"; // Login
+const char* password = "NaoLembro"; //Senha
 //*******************
 
 //*******************
 // PROTOTIPOS DE FUNÇÃO
 void sendData(String params);
 
-
-String GOOGLE_SCRIPT_ID = "-";
 
 const char * root_ca=\
 "-----BEGIN CERTIFICATE-----\n" \
@@ -47,7 +55,8 @@ WiFiClientSecure client;
 //**************** SETUP ***************
 void setup(){
 	
-    Serial.begin(115200);
+    Serial.begin(9600);
+    pinMode(led, OUTPUT);
 	
 	// Set device as a Wi-Fi Station
 	WiFi.mode(WIFI_STA);
@@ -70,8 +79,27 @@ void setup(){
 
 void loop(){
 
-}
+    unsigned long tempocorrentMillis = millis();
 
+    //SE O TEMPO ATUAL MENOS O TEMPO ANTERIOR FOR MENOR QUE O INTERVALO, EXECULTA FUNÇAO
+    if (tempocorrentMillis - timeIntervalAnterior > timeInterval) {
+    //TEMPO ANTERIOR GUARDA O TEMPO ATUAL
+        tempocorrentMillis = timeIntervalAnterior;
+
+        if (estadoLed == LOW) { //VERIFICA O ESTADO ATUAL DO LED E SE ESTIVER EM DESLIGADO MUDA PARA LIGADO
+            estadoLed = HIGH; //VARIÁVEL RECEBE ESTADO HIGH(LIGA O LED)
+        } 
+        else { //SENÃO, FAZ
+            estadoLed = LOW; //VARIÁVEL RECEBE ESTADO LOW(DESLIGA O LED)
+        }
+        digitalWrite(led, estadoLed); //ESCREVE NO PINO DIGITAL O ESTADO ATUAL (LIGADO OU DESLIGADO)
+    }
+
+
+}
+ 
+
+//bool tempo(int tempoDeEspera, )
 
 void sendData(String params) { //function sending data to google excel sheet
 	Serial.println("");
