@@ -84,7 +84,7 @@ void loop(){
     //SE O TEMPO ATUAL MENOS O TEMPO ANTERIOR FOR MENOR QUE O INTERVALO, EXECULTA FUNÇAO
     if (tempocorrentMillis - timeIntervalAnterior > timeInterval) {
     //TEMPO ANTERIOR GUARDA O TEMPO ATUAL
-        tempocorrentMillis = timeIntervalAnterior;
+        timeIntervalAnterior = tempocorrentMillis;
 
         if (estadoLed == LOW) { //VERIFICA O ESTADO ATUAL DO LED E SE ESTIVER EM DESLIGADO MUDA PARA LIGADO
             estadoLed = HIGH; //VARIÁVEL RECEBE ESTADO HIGH(LIGA O LED)
