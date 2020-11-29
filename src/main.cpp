@@ -4,10 +4,12 @@
 
 // Declarando Variaveis
 
-String GOOGLE_SCRIPT_ID = "AKfycbxr2z__0kjNbziMTFsTEeX_qn1OHuzZcnriaXQu1RGMl7uHndTc";
+String GOOGLE_SCRIPT_ID = "AKfycbysxaoil3u3QpIgTjE9XirVmcdl5T6YloEQHQA9h9R-KLn6LbQ";
 
-long timeInterval = 5000;
+long timeInterval = 1000;
+long timeIntervalEnvio = 5000;
 long timeIntervalAnterior = 0;
+long timeIntervalAnteriorEnvio = 0;
 
 #define led 2
 bool estadoLed = LOW;
@@ -95,11 +97,13 @@ void loop(){
         digitalWrite(led, estadoLed); //ESCREVE NO PINO DIGITAL O ESTADO ATUAL (LIGADO OU DESLIGADO)
     }
 
+    if(tempocorrentMillis - timeIntervalAnteriorEnvio > timeIntervalEnvio){
+        timeIntervalAnteriorEnvio = tempocorrentMillis;
+        sendData("tag=leo&value=31");
+    }
 
 }
- 
 
-//bool tempo(int tempoDeEspera, )
 
 void sendData(String params) { //function sending data to google excel sheet
 	Serial.println("");
@@ -108,10 +112,11 @@ void sendData(String params) { //function sending data to google excel sheet
     HTTPClient http;
     
     String url="https://script.google.com/macros/s/"+GOOGLE_SCRIPT_ID+"/exec?"+params;
-    Serial.print(url);
+    Serial.println(url);
     Serial.println("Making a request");
     http.begin(url, root_ca); //Specify the URL and certificate
-    int httpCode = http.GET();  
+    int httpCode = http.GET();
+    Serial.println(httpCode);  
     http.end();
     Serial.println("Dados enviados...");
 }
