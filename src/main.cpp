@@ -6,7 +6,7 @@
 
 // Declarando Variaveis
 
-String GOOGLE_SCRIPT_ID = "AKfycbxd2VNtV7rD3AlqoaehmKVqHKAFwcx4zT8CaD20by60wM9jbHjz";
+String GOOGLE_SCRIPT_ID = "";
 long timeInterval = 1000;
 long timeIntervalEnvio = 5000;
 long timeIntervalAnterior = 0;
@@ -21,8 +21,8 @@ bool estadoLed = LOW;
 
 //******************
 // *** Senha da rede 
-const char* ssid = "Vedderdog_2.4"; // Login
-const char* password = "NaoLembro"; //Senha
+const char* ssid = ""; // Login
+const char* password = ""; //Senha
 //*******************
 
 //*******************
@@ -107,7 +107,6 @@ void loop(){
 
 }
 
-
 void sendData(String params) { //function sending data to google excel sheet
 	Serial.println("");
     Serial.println("Enviando dados...");
@@ -117,7 +116,7 @@ void sendData(String params) { //function sending data to google excel sheet
     String url="https://script.google.com/macros/s/"+GOOGLE_SCRIPT_ID+"/exec?"+params;
     Serial.println(url);
     Serial.println("Making a request");
-    http.begin(url, root_ca); //Specify the URL and certificate
+    http.begin(url, root_ca); //Passando url e certificado
     int httpCode = http.GET();
     Serial.println(httpCode);  
     http.end();
