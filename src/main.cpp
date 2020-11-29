@@ -1,15 +1,18 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include <WiFiClientSecure.h>
+
 
 // Declarando Variaveis
 
-String GOOGLE_SCRIPT_ID = "AKfycbysxaoil3u3QpIgTjE9XirVmcdl5T6YloEQHQA9h9R-KLn6LbQ";
-
+String GOOGLE_SCRIPT_ID = "AKfycbxd2VNtV7rD3AlqoaehmKVqHKAFwcx4zT8CaD20by60wM9jbHjz";
 long timeInterval = 1000;
 long timeIntervalEnvio = 5000;
 long timeIntervalAnterior = 0;
 long timeIntervalAnteriorEnvio = 0;
+
+//const int httpsPort = 443;
 
 #define led 2
 bool estadoLed = LOW;
@@ -99,7 +102,7 @@ void loop(){
 
     if(tempocorrentMillis - timeIntervalAnteriorEnvio > timeIntervalEnvio){
         timeIntervalAnteriorEnvio = tempocorrentMillis;
-        sendData("tag=leo&value=31");
+        sendData("temperature="+ String(random(1,99)) +"&"+ "humidity="+String(random(1,50)));
     }
 
 }
