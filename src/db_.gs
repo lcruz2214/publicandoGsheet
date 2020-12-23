@@ -22,11 +22,25 @@ function doGet(e) {
     result = 'No Parameters';
   }
   else {
-    var sheet_id = '1IClm5vtgvOAICJi-1Wn6hFB6iS8bH10pyX7U5W0XlDE'; 		// Spreadsheet ID
+    var sheet_id = ' xxxxx '; 		// Spreadsheet ID
     var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet();		// get Active sheet
     var newRow = sheet.getLastRow() + 1;						
     var rowData = [];
+    var horas = '';
+    //===
+    const options = {
+      timeZone: 'America/Sao_Paulo',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: false,
+    };
+    horas = new Intl.DateTimeFormat([], options);
+    horas.format(new Date());
+    
     rowData[0] = new Date(); 											// Timestamp in column A
+    
+    rowData[1] = horas.format(new Date());
   
     for (var param in e.parameter) {
       Logger.log('In for loop, param=' + param);
